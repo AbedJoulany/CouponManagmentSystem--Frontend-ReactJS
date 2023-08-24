@@ -6,6 +6,7 @@ import {
     MDBRow,
     MDBCol,
 } from 'mdb-react-ui-kit';
+
 import { useNavigate } from 'react-router-dom';
 import AuthService from '../api/AuthService';
 import {request, setAuthToken} from "../api/axiosHelper";
@@ -29,7 +30,6 @@ const Login = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         const {email, password, selectedClientType} = formValue;
-        console.log(selectedClientType);
         request("POST",
             "http://localhost:8080/api/auth/authenticate",
             {
@@ -37,7 +37,8 @@ const Login = () => {
                 password: password,
                 role: selectedClientType,
             }).then((response) => {
-            setAuthToken(response.data);
+            const accessToken = response.data.access_token;
+            setAuthToken(accessToken);
             navigate("/admin")
         }).catch((error) => {
             console.error('Login error:', error);
@@ -94,6 +95,7 @@ const Login = () => {
                                         id="passwordValidation"
                                         required
                                         label="Password"
+                                        autocomplete="on"
                                     />
                                 </div>
                                 <div className="form-outline mb-4">

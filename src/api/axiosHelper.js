@@ -5,11 +5,11 @@ axios.defaults.headers.post["Content-type"] = 'application/json'
 
 
 export const getAuthToken = () => {
-    return window.localStorage.getItem("auth_token");
+    return sessionStorage.getItem("auth_token");
 };
 
 export const setAuthToken = (token) => {
-    window.localStorage.setItem("auth_token",token);
+    sessionStorage.setItem("auth_token",token);
 };
 
 export const request = (method,url,data) =>{
@@ -19,7 +19,6 @@ export const request = (method,url,data) =>{
     {
         headers = {"Authorization": `Bearer ${getAuthToken()}`};
     }
-    console.log(headers)
     return axios({
         method:method,
         headers:headers,
