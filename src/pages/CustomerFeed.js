@@ -1,20 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {
-    MDBCol,
-    MDBContainer,
-
-    MDBRow
-} from "mdb-react-ui-kit";
+import Navbar from '../components/Navbar';
+import {MDBBtn, MDBCol, MDBContainer, MDBNavbar, MDBRow} from "mdb-react-ui-kit";
 import {request} from "../api/axiosHelper";
 import CouponCard from "../components/CouponCard";
 import CustomerNavbar from "../components/CustomerNavbar/CustomerNavbar";
 
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import CartPage from "../components/cartPage/CartPage";
-import CheckoutPage from "../components/checkoutPage/CheckoutPage";
-
-
-const CustomerPage = () => {
+const CustomerFeed = () => {
 
     const [coupons, setCoupons] = useState([]);
     const [cartItems, setCartItems] = useState([]);
@@ -52,12 +43,12 @@ const CustomerPage = () => {
                 <h2>Customer Content</h2>
                 <MDBRow>
                     <MDBCol className="col-md-4 mb-4">
-                    {coupons.map((coupon) => (
-                        <CouponCard
-                            coupon={coupon}
-                            addToCart = {addToCart}
-                        /> // Assuming you have a unique identifier like 'id'
-                    ))}
+                        {coupons.map((coupon) => (
+                            <CouponCard
+                                coupon={coupon}
+                                addToCart = {addToCart}
+                            /> // Assuming you have a unique identifier like 'id'
+                        ))}
                     </MDBCol>
                 </MDBRow>
             </MDBContainer>
@@ -65,4 +56,4 @@ const CustomerPage = () => {
     );
 };
 
-export default CustomerPage;
+export default CustomerFeed;

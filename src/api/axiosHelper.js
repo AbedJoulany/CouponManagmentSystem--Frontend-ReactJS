@@ -12,7 +12,7 @@ export const setAuthToken = (token) => {
     sessionStorage.setItem("auth_token",token);
 };
 
-export const request = (method,url,data) =>{
+export const request = (method,url,data,) =>{
     let headers = {};
 
     if(getAuthToken() !== null && getAuthToken()!=="null")

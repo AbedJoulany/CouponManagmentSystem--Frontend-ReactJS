@@ -16,13 +16,16 @@ const CartItem = ({ item, removeFromCart }) => {
                 <h6 className="text-muted" style={{ fontStyle: 'italic', fontSize: '1.5rem'}}>
                     {item.title}
                 </h6>
+                <p className="text-muted" style={{ fontStyle: 'italic', fontSize: '1.2rem'}}>
+                    {item.description}
+                </p>
                 <h6 className="text-black mb-0" style={{ fontSize: '1.3rem',marginTop: '1rem' }}>${item.price}</h6>
             </div>
             <div className="col-lg-4 col-md-6 d-flex align-items-center justify-content-end">
                 <MDBBtn
                     type="button"
                     className="btn btn-primary btn-sm me-1 mb-2"
-                    onClick={() => removeFromCart(item.id)}
+                    onClick={() => removeFromCart(item)}
                     data-mdb-toggle="tooltip"
                     title="Remove item"
                 >

@@ -39,7 +39,14 @@ const Login = () => {
             }).then((response) => {
             const accessToken = response.data.access_token;
             setAuthToken(accessToken);
-            navigate("/admin")
+            if (selectedClientType === '0') {
+                navigate("/admin")
+            }else if(selectedClientType === '1') {
+                navigate("/company")
+            }
+            else if(selectedClientType === '2'){
+                    navigate("/customer")
+            }
         }).catch((error) => {
             console.error('Login error:', error);
             setLoginError(true);

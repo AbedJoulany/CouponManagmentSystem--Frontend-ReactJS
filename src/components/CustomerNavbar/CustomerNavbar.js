@@ -23,6 +23,11 @@ const CustomerNavbar = ({ cartItemCount }) => {
                 <div className="collapse navbar-collapse" id="navbarNav">
                     <ul className="navbar-nav">
                         <li className="nav-item">
+                            <Link className="nav-link" to="/my-coupons">
+                                My Coupons
+                            </Link>
+                        </li>
+                        <li className="nav-item">
                             <Link className="nav-link" to="/cart">
                                 Cart&nbsp;
                                 <span><i className="fas fa-shopping-cart"></i></span>
@@ -42,3 +47,28 @@ const CustomerNavbar = ({ cartItemCount }) => {
 };
 
 export default CustomerNavbar;
+
+
+
+/*
+            <MDBCard className='w-50'>
+                <MDBCardBody>
+                    <MDBRow>
+                        <MDBCol>
+                            <MDBBtn tag='a' color='none'  size='lg'>
+                                <MDBBadge light='true' className='p-3 badge-primary rounded-4'>
+                                    <MDBIcon className="fas fa-shopping-cart fa-lg"></MDBIcon>
+                                    <MDBBadge className='ms-1' color='danger'>
+                                        {cartItems.length}
+                                    </MDBBadge>
+                                </MDBBadge>
+                            </MDBBtn>
+                        </MDBCol>
+                        <MDBCol>
+                            <p>Cart</p>
+                        </MDBCol>
+                    </MDBRow>
+                </MDBCardBody>
+            </MDBCard>
+
+ */

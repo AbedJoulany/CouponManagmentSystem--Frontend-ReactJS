@@ -1,31 +1,22 @@
-import React, {useEffect, useState} from 'react';
-import {
-    MDBCol,
-    MDBContainer,
-
-    MDBRow
-} from "mdb-react-ui-kit";
+import React, {useEffect, useState} from "react";
 import {request} from "../api/axiosHelper";
-import CouponCard from "../components/CouponCard";
 import CustomerNavbar from "../components/CustomerNavbar/CustomerNavbar";
-
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import CartPage from "../components/cartPage/CartPage";
-import CheckoutPage from "../components/checkoutPage/CheckoutPage";
+import {MDBCol, MDBContainer, MDBRow} from "mdb-react-ui-kit";
+import CouponCard from "../components/CouponCard";
 
 
-const CustomerPage = () => {
+const CustomerCoupons = () => {
 
     const [coupons, setCoupons] = useState([]);
     const [cartItems, setCartItems] = useState([]);
 
     useEffect(() => {
-        fetchCoupons();
+        fetchPurchasedCoupons();
         retrieveCartFromSessionStorage();
     }, []);
-    const fetchCoupons = async () => {
+    const fetchPurchasedCoupons = async () => {
         try {
-            const response = await request('GET', '/api/coupons/getAllCoupons', {});
+            const response = await request('GET', '/api/customer/getCustomerCoupons', {});
             setCoupons(response.data);
         } catch (error) {
             console.error('Error fetching coupons:', error);
@@ -52,12 +43,12 @@ const CustomerPage = () => {
                 <h2>Customer Content</h2>
                 <MDBRow>
                     <MDBCol className="col-md-4 mb-4">
-                    {coupons.map((coupon) => (
-                        <CouponCard
-                            coupon={coupon}
-                            addToCart = {addToCart}
-                        /> // Assuming you have a unique identifier like 'id'
-                    ))}
+                        {coupons.map((coupon) => (
+                            <CouponCard
+                                coupon={coupon}
+                                addToCart = {addToCart}
+                            /> // Assuming you have a unique identifier like 'id'
+                        ))}
                     </MDBCol>
                 </MDBRow>
             </MDBContainer>
@@ -65,4 +56,4 @@ const CustomerPage = () => {
     );
 };
 
-export default CustomerPage;
+export default CustomerCoupons;

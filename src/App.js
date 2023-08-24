@@ -9,6 +9,9 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import './App.css';
 import Navbar from "./components/Navbar";
 import CartPage from "./components/cartPage/CartPage";
+import CheckoutPage from "./components/checkoutPage/CheckoutPage";
+import CustomerFeed from "./pages/CustomerFeed";
+import CustomerCoupons from "./pages/CustomerCoupons";
 
 
 function App() {
@@ -21,7 +24,10 @@ function App() {
                     <Route path="/admin" element={<AdminPage />} />
                     <Route path="/company" element={<CompanyPage />} />
                     <Route path="/customer" element={<CustomerPage />} />
+                    <Route path="/feed" element={<CustomerFeed />} />
                     <Route path="/cart" element={<CartPage />} />
+                    <Route path="/checkout" element={<CheckoutPage />} />
+                    <Route path="/my-coupons" element={<CustomerCoupons/>} />
                 </Routes>
             </Router>
         </div>

@@ -24,7 +24,7 @@ const CouponCard = ({coupon,addToCart}) => {
         //setShowNotification(true);
     };
 
-    const handleBuyNow= (coupon) => {
+    const handleBuyNow = (coupon) => {
         addToCart(coupon);
         navigate("/cart");
     };

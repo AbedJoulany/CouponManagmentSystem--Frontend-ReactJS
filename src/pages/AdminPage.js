@@ -17,8 +17,6 @@ import Navbar from "../components/Navbar";
 const AdminPage = () => {
 
     const [iconsActive, setIconsActive] = useState('customers');
-
-
     const handleIconsClick = (value) => {
         if (value === iconsActive) {
             return;

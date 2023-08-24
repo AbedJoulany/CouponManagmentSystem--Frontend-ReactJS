@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import CartItem from './CartItem';
 import CartSummary from './CartSummary';
+import {MDBBtn} from "mdb-react-ui-kit";
 
 const CartPage = () => {
 
@@ -16,8 +17,20 @@ const CartPage = () => {
             setCartItems(JSON.parse(storedCart));
         }
     };
-    const removeFromCart = async (itemId) => {
+    const removeFromCart = async (item) => {
+        const updatedCart = cartItems.filter(cartItem => cartItem.id !== item.id);
+        setCartItems(updatedCart);
+        sessionStorage.setItem('cart',JSON.stringify(updatedCart));
     };
+
+    const calculateTotalAmount = (items) => {
+        return items.reduce((acc, item) => acc + item.price, 0);
+    };
+
+    const clearCart = ()=>{
+        setCartItems([]);
+        sessionStorage.setItem('cart',JSON.stringify([]));
+    }
 
     return (
         <section className="h-100 gradient-custom">
@@ -27,9 +40,9 @@ const CartPage = () => {
                         <div className="card mb-4">
                             <div className="card-header d-flex justify-content-between align-items-center mb-4 py-3">
                                 <h5 className="mb-0">Cart - {cartItems.length} items</h5>
-                                <button className="btn btn-danger" >
+                                <MDBBtn className="btn btn-danger" onClick={clearCart}>
                                     Clear All Cart
-                                </button>
+                                </MDBBtn>
                             </div>
                             <div className="card-body">
                                 {cartItems.length === 0 ? (
@@ -45,9 +58,9 @@ const CartPage = () => {
                             </div>
                         </div>
                     </div>
-                   {/* <div className="col-md-4">
+                   { <div className="col-md-4">
                         {cartItems.length > 0 && <CartSummary totalAmount={calculateTotalAmount(cartItems)} />}
-                    </div>*/}
+                    </div>}
                 </div>
             </div>
         </section>
