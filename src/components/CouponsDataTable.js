@@ -7,16 +7,16 @@ import {
     MDBBtn, MDBIcon, MDBInput, MDBModal, MDBModalHeader, MDBModalBody, MDBModalFooter,
     MDBModalDialog,
     MDBModalContent,
-    MDBModalTitle, MDBContainer, MDBCol, MDBRow,
+    MDBModalTitle, MDBContainer, MDBRow, MDBCol,
 } from 'mdb-react-ui-kit';
-import CompanyForm from "./CompanyForm";
+import CompanyCouponsForm from "./CompanyCouponsForm";
 
-const CompaniesDataTable = () => {
-    const [companies, setCompanies] = useState([]);
+const CouponsDataTable = () => {
+    const [coupons, setCoupons] = useState([]);
     const [searchText, setSearchText] = useState('');
     const [basicModal, setBasicModal] = useState(false);
     const [editMode, setEditMode] = useState(false);
-    const [selectedCompany, setSelectedCompany] = useState(null);
+    const [selectedCoupon, setSelectedCoupon] = useState(null);
 
     const toggleShow = () => setBasicModal(!basicModal);
 
@@ -33,43 +33,47 @@ const CompaniesDataTable = () => {
         }
     }, [successMessage]);
 
-    const handleEditClick = (company) => {
-        setSelectedCompany(company);
+    const handleEditClick = (coupon) => {
+        setSelectedCoupon(coupon);
         setEditMode(true);
         toggleShow(); // Open the modal
     };
-    const handleDeleteClick = async (company) => {
+    const handleDeleteClick = async (coupon) => {
         try {
-            const response = await request('DELETE', `/api/admin/deleteCompany?id=${company.id}`, {});
+            const response = await request('DELETE', `/api/company/deleteCoupon?id=${coupon.id}`, {});
             if (response.status === 200) {
                 // Delete the company from the companies list
-                const updatedCompanies = companies.filter(c => c.id !== company.id);
-                setCompanies(updatedCompanies);
+                const updatedCoupons = coupons.filter(c => c.id !== coupon.id);
+                setCoupons(updatedCoupons);
             } else {
-                console.error('Failed to delete company:', response.data);
+                console.error('Failed to delete coupon:', response.data);
             }
         } catch (error) {
-            console.error('Error fetching customers:', error);
+            console.error('Failed to delete coupon:', error);
         }
     };
 
-    const fetchCompanies = async () => {
+    const fetchCoupons = async () => {
         try {
-            const response = await request('GET', '/api/admin/getAllCompanies', {});
-            setCompanies(response.data);
+            const response = await request('GET', '/api/company/getCompanyCoupons', {});
+            setCoupons(response.data);
         } catch (error) {
-            console.error('Error fetching customers:', error);
+            console.error('Error fetching coupons:', error);
         }
     };
 
     useEffect(() => {
-        fetchCompanies();
+        fetchCoupons();
     }, []); // Fetch customers when the component mounts
 
     const columns = [
-        { name: 'Name', selector: (row) => row.name, sortable: true },
-        { name: 'Email', selector: (row) => row.email, sortable: true },
-        { name: 'Password', selector: (row) => row.password, sortable: true },
+        { name: 'Title', selector: (row) => row.title, sortable: true },
+        { name: 'Description', selector: (row) => row.description, sortable: true },
+        { name: 'price', selector: (row) => row.price, sortable: true },
+        { name: 'category', selector: (row) => row.category, sortable: true },
+        { name: 'image', selector: (row) => row.image, sortable: true },
+        { name: 'startDate', selector: (row) => new Date(row.startDate).toLocaleDateString(), sortable: true },
+        { name: 'endDate', selector: (row) => new Date(row.endDate).toLocaleDateString(),  sortable: true },
         {
             name: 'Actions',
             cell: (row) => (
@@ -77,7 +81,7 @@ const CompaniesDataTable = () => {
                     <MDBBtn  tag='a' color='none' className='m-1'>
                         <MDBIcon  fas icon="user-edit"
                                   onClick={handleEditClick.bind(this, row)}
-                                   />
+                        />
                     </MDBBtn>
                     <MDBBtn  tag='a' color='none' className='m-1' style={{ color: '#dd4b39' }}>
                         <MDBIcon fas icon="trash-alt"
@@ -92,65 +96,63 @@ const CompaniesDataTable = () => {
         },
     ];
 
-    const filteredCompanies = companies.filter(
-        (company) =>
-            company.name.toLowerCase().includes(searchText.toLowerCase()) ||
-            company.email.toLowerCase().includes(searchText.toLowerCase())
+    const filteredCoupons = coupons.filter(
+        (coupon) =>
+            coupon.title.toLowerCase().includes(searchText.toLowerCase())
     );
 
-    const handleSubmit = async (companyData, event) => {
+    const handleSubmit = async (couponData, event) => {
         event.preventDefault(); // Prevent page refresh
         try {
-            if (editMode && selectedCompany) {
-                const updatedCompanyData = { ...companyData, id: selectedCompany.id };
-                const response = await request('PUT', `/api/admin/updateCompany`, updatedCompanyData);
-                setSuccessMessage('Company saved successfully!');
+            if (editMode && selectedCoupon) {
+                const updatedCouponData = { ...couponData, id: selectedCoupon.id };
+                const response = await request('PUT', `/api/company/updateCoupon`, updatedCouponData);
+                setSuccessMessage('Coupon saved successfully!');
             } else {
-                const response = await request('POST', '/api/admin/addCompany', companyData);
-                setSuccessMessage('Company added successfully!');
+                const response = await request('POST', '/api/company/addCoupon', couponData);
+                setSuccessMessage('Coupon added successfully!');
             }
-            fetchCompanies(); // Fetch updated data
+            fetchCoupons(); // Fetch updated data
         } catch (error) {
-            console.error('Error adding/updating company:', error);
+            console.error('Error adding/updating coupon:', error);
         }
     };
 
     return (
-        <MDBContainer className="my-4">
-            <MDBRow className="d-flex justify-content-end align-items-center">
-                <MDBCol className="p-2">
-                    <MDBInput
-                        id ="company-search"
-                        label="Search..."
-                        onChange={(e) => setSearchText(e.target.value)}
-                        type="text"
-                    />
-                </MDBCol>
-                <MDBCol className="p-2">
-                    <MDBBtn color="primary" onClick={toggleShow}>
-                        <MDBIcon fas icon="plus" /> Add Company
-                    </MDBBtn>
-                </MDBCol>
-            </MDBRow>
+        <MDBContainer className="py-5 h-100">
+           <MDBRow className="d-flex justify-content-end align-items-center">
+              <MDBCol className="p-2">
+                  <MDBInput
+                      id ="search-coupon"
+                      label="Search..."
+                      onChange={(e) => setSearchText(e.target.value)}
+                      type="text"
+                  />
+              </MDBCol>
+              <MDBCol className="p-2">
+                  <MDBBtn color="primary" onClick={toggleShow}>
+                      <MDBIcon fas icon="plus" /> Add Coupon
+                  </MDBBtn>
+              </MDBCol>
+           </MDBRow>
             <DataTable
-                title="Companies"
+                title="Coupons"
                 columns={columns}
-                data={filteredCompanies}
+                data={filteredCoupons}
                 pagination
             />
             <MDBModal show={basicModal} setShow={setBasicModal} tabIndex='-1'>
-                <MDBModalDialog >
+                <MDBModalDialog size='lg'>
                     <MDBModalContent>
                         <MDBModalHeader>
-                            <MDBModalTitle>New Company</MDBModalTitle>
+                            <MDBModalTitle>New Coupon</MDBModalTitle>
                             <MDBBtn className='btn-close' color='none' onClick={toggleShow}></MDBBtn>
                         </MDBModalHeader>
                         <hr />
                         <MDBModalBody>
-                            <CompanyForm
+                            <CompanyCouponsForm
                                 handleSubmit={handleSubmit}
-                                editMode={editMode}
-                                initialName={selectedCompany ? selectedCompany.name : ''}
+                                coupon={editMode ? selectedCoupon : {}}
                             />
                             {successMessage && (
                                 <div className="alert alert-success mt-3" role="alert">
@@ -171,4 +173,4 @@ const CompaniesDataTable = () => {
     );
 };
 
-export default CompaniesDataTable;
+export default CouponsDataTable;

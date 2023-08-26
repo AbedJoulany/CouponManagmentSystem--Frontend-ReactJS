@@ -4,10 +4,11 @@ import DataTable from 'react-data-table-component';
 import CustomerForm from "./CustomerForm";
 import axios from 'axios';
 
-import { MDBBtn, MDBIcon, MDBInput, MDBModal, MDBModalHeader, MDBModalBody, MDBModalFooter,
+import {
+    MDBBtn, MDBIcon, MDBInput, MDBModal, MDBModalHeader, MDBModalBody, MDBModalFooter,
     MDBModalDialog,
     MDBModalContent,
-    MDBModalTitle,
+    MDBModalTitle, MDBRow, MDBCol,
 } from 'mdb-react-ui-kit';
 import CompanyForm from "./CompanyForm";
 
@@ -119,15 +120,22 @@ const CustomersDataTable = () => {
     return (
 
         <div className="my-4">
-            <MDBInput
-                id ="form1"
-                label="Search..."
-                onChange={(e) => setSearchText(e.target.value)}
-                type="text"
-            />
-            <MDBBtn color="primary" onClick={toggleShow}>
-                <MDBIcon fas icon="plus" /> Add Customer
-            </MDBBtn>
+            <MDBRow className="d-flex justify-content-end align-items-center">
+                <MDBCol className="p-2">
+                    <MDBInput
+                        id ="customer-search"
+                        label="Search..."
+                        onChange={(e) => setSearchText(e.target.value)}
+                        type="text"
+                    />
+                </MDBCol>
+                <MDBCol className="p-2">
+                    <MDBBtn color="primary" onClick={toggleShow}>
+                        <MDBIcon fas icon="plus" /> Add Customer
+                    </MDBBtn>
+                </MDBCol>
+            </MDBRow>
+
             <DataTable
                 title="Customers"
                 columns={columns}
