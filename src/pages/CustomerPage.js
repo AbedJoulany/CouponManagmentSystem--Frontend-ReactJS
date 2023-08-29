@@ -50,15 +50,16 @@ const CustomerPage = () => {
             <CustomerNavbar cartItemCount={cartItems.length}></CustomerNavbar>
             <MDBContainer className="py-5 h-100">
                 <h2>Customer Content</h2>
-                <MDBRow>
-                    <MDBCol className="col-md-4 mb-4">
+                <MDBRow className='row-cols-1 row-cols-md-3 g-4'>
                     {coupons.map((coupon) => (
+                        <MDBCol>
                         <CouponCard
                             coupon={coupon}
                             addToCart = {addToCart}
-                        /> // Assuming you have a unique identifier like 'id'
+                        />
+                        </MDBCol>
+
                     ))}
-                    </MDBCol>
                 </MDBRow>
             </MDBContainer>
         </div>

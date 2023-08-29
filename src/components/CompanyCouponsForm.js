@@ -40,6 +40,12 @@ const CompanyCouponsForm = ({ handleSubmit,coupon = {} }) => {
             setAmount(coupon.amount );
             setPrice(coupon.price );
             setImageUrl(coupon.image );
+        }
+        if (coupon.startDate && coupon.endDate) {
+            const startDate = new Date(coupon.startDate);
+            const endDate = new Date(coupon.endDate);
+            setDateRange([startDate, endDate]);
+        } else {
             setDateRange([]);
         }
     }, [coupon]);
@@ -69,8 +75,13 @@ const CompanyCouponsForm = ({ handleSubmit,coupon = {} }) => {
                       value={title}
                       onChange={(e) => setTitle(e.target.value)}
             />
-            <MDBTextArea  wrapperClass='mb-3' textarea="true" id='coupon-description' rows={4} label='Description'
-                      onChange={(e) => setDescription(e.target.value)} />
+            <MDBTextArea  wrapperClass='mb-3'
+                          textarea="true"
+                          id='coupon-description'
+                          rows={4} label='Description'
+                          onChange={(e) => setDescription(e.target.value)}
+                          value ={description}
+            />
             <MDBRow className='mb-3'>
                 <MDBCol>
                     <MDBInputGroup  textBefore='$' textAfter='.00'>

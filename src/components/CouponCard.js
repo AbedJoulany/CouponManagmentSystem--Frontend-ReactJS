@@ -20,6 +20,7 @@ const CouponCard = ({coupon,addToCart}) => {
     const navigate = useNavigate(); // Initialize history
     const handleAddToCart = (coupon) => {
         addToCart(coupon);
+        console.log(coupon.company.name)
         //setMessage('Item added to cart!');
         //setShowNotification(true);
     };
@@ -33,7 +34,10 @@ const CouponCard = ({coupon,addToCart}) => {
         <MDBCard>
             <MDBCardImage position='top' alt='...' src={coupon.image} />
             <MDBCardBody>
-                <MDBCardTitle><h3>{coupon.title}</h3></MDBCardTitle>
+                <MDBCardTitle className="d-flex justify-content-between">
+                    <h3>{coupon.title}</h3>
+                    <h3>{coupon.company.name}</h3>
+                </MDBCardTitle>
                 <MDBCardText>
                     <h6 className="text-muted">{coupon.description}</h6>
                 </MDBCardText>
@@ -41,9 +45,8 @@ const CouponCard = ({coupon,addToCart}) => {
                 <div className="d-flex justify-content-start">
                     <h5>{coupon.category}</h5>
                 </div>
-                <div className="d-flex justify-content-between">
-                    <p><strong>Start Date:</strong> {startDateFormatted}</p>
-                    <p><strong>End Date:</strong> {endDateFormatted}</p>
+                <div className="d-flex justify-content-between ">
+                    <p><strong>start-expiration:</strong> {startDateFormatted} - {endDateFormatted}</p>
                 </div>
                 <div className="d-flex justify-content-between mb-3">
                     <h5 className="mb-0">Available: {coupon.amount}</h5>

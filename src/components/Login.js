@@ -40,12 +40,12 @@ const Login = () => {
             const accessToken = response.data.access_token;
             setAuthToken(accessToken);
             if (selectedClientType === '0') {
-                navigate("/admin")
+                navigate("/admin/dashboard")
             }else if(selectedClientType === '1') {
-                navigate("/company")
+                navigate("/company/dashboard")
             }
             else if(selectedClientType === '2'){
-                    navigate("/customer")
+                    navigate("/customer/feed")
             }
         }).catch((error) => {
             console.error('Login error:', error);

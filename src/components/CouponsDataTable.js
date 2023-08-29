@@ -119,7 +119,7 @@ const CouponsDataTable = () => {
     };
 
     return (
-        <MDBContainer className="py-5 h-100">
+        <div>
            <MDBRow className="d-flex justify-content-end align-items-center">
               <MDBCol className="p-2">
                   <MDBInput
@@ -135,8 +135,9 @@ const CouponsDataTable = () => {
                   </MDBBtn>
               </MDBCol>
            </MDBRow>
+            <hr />
+
             <DataTable
-                title="Coupons"
                 columns={columns}
                 data={filteredCoupons}
                 pagination
@@ -169,7 +170,7 @@ const CouponsDataTable = () => {
                     </MDBModalContent>
                 </MDBModalDialog>
             </MDBModal>
-        </MDBContainer>
+        </div>
     );
 };
 
